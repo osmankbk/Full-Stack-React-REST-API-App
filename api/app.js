@@ -27,7 +27,7 @@ const app = express();
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors);
+app.use(cors());
 
 // setup a friendly greeting for the root route
 app.get('/', (req, res) => {

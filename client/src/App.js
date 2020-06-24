@@ -1,47 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { 
+  BrowserRouter,
+  Route,
+  Switch
+} from 'react-router-dom';
+import Courses from './Courses';
+import CreateCourse from './CreateCourse';
+import UpdateCourse from './UpdateCourse';
+import CourseDetail from './CourseDetail';
+import UserSignIn from './UserSignIn';
+import UserSignUp from './UserSignUp';
+import Header from './Header';
 import './App.css';
 
-class App extends Component {
-  state = {
-    courses: []
-  }
-  componentDidMount() {
-    this.getCourse();
-  }
-  getCourse(){
-    fetch('http://localhost:5000/api/courses').then(response =>{
-      this.setState({
-        courses: response,
-      });
-    }).catch(error => {
-      console.log('error getting courses');
-    })
-  }
-  render() {
+const App = () => {
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>{
-            this.state.courses.map(course => {
-            return <ul><li>course.title</li></ul>
-          })
-          }</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  <BrowserRouter>
+    <div>
+      <Header />
+      <Switch>
+        <Route exact path="/" component={Courses} />
+        <Route path="/courses/create" component={CreateCourse} />
+        <Route path="/courses/create" component={CreateCourse} />
+        <Route path="/courses/:id/update" component={UpdateCourse} />
+        <Route path="/:id" component={CourseDetail} />
+        <Route path="/signin" component={UserSignIn} />
+        <Route path="/signup" component={UserSignUp} />
+      </Switch>
     </div>
+  </BrowserRouter>
   );
-  }
+  
 }
 
 export default App;
