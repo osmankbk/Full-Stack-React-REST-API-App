@@ -1,35 +1,39 @@
 import React from 'react';
 import { 
-  BrowserRouter,
+  BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
-import Courses from './Courses';
-import CreateCourse from './CreateCourse';
-import UpdateCourse from './UpdateCourse';
-import CourseDetail from './CourseDetail';
-import UserSignIn from './UserSignIn';
-import UserSignUp from './UserSignUp';
-import Header from './Header';
-import './App.css';
+import Courses from './components/Courses';
+import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
+import CourseDetail from './components/CourseDetail';
+import UserSignIn from './components/UserSignIn';
+import UserSignUp from './components/UserSignUp';
+import Header from './components/Header';
+import withContext from './Context.js';
+
+const UserSignUpWithContext = withContext(UserSignUp);
 
 const App = () => {
  
   return (
-  <BrowserRouter>
+  <Router>
     <div>
       <Header />
       <Switch>
-        <Route exact path="/" component={Courses} />
+        <Redirect exact from="/" to="/courses" />
+        <Route exact path="/courses" component={Courses} />
         <Route path="/courses/create" component={CreateCourse} />
         <Route path="/courses/create" component={CreateCourse} />
         <Route path="/courses/:id/update" component={UpdateCourse} />
-        <Route path="/:id" component={CourseDetail} />
+        <Route path="/courses/:id" component={CourseDetail} />
         <Route path="/signin" component={UserSignIn} />
-        <Route path="/signup" component={UserSignUp} />
+        <Route path="/signup" component={UserSignUpWithContext} />
       </Switch>
     </div>
-  </BrowserRouter>
+  </Router>
   );
   
 }

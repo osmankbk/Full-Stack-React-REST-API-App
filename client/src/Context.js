@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Data from './Data';
+//import axios from 'axios';
 const Context = React.createContext();
 
+
 export class Provider extends Component {
-    state = {
-        courses: []
-      }
-      componentDidMount() {
+
+  state = {
+        
+  }
+
+  constructor() {
+    super();
+    this.data = new Data();
+
+  }
+   
+     /* componentDidMount() {
         this.getCourse();
       }
       getCourse(){
@@ -18,13 +28,11 @@ export class Provider extends Component {
         }).catch(error => {
           console.log('error getting courses', error);
         })
-      }
+      }*/
       render() {
 
-        const { courses } = this.state;
-
         const value = {
-            courses,
+            data: this.data,
         }
           return (
               <Context.Provider value={value}>
@@ -34,7 +42,7 @@ export class Provider extends Component {
       }
 }
 
-export const Consumer = Context.Consumer;
+//export const Consumer = Context.Consumer;
 
 export default function withContext(Component) {
     return function ContextComponent(props) {
