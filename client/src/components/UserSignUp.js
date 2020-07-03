@@ -27,6 +27,9 @@ class UserSignUp extends Component {
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
           <div>
+            { <ul>
+                {errors.map((error, i) => <li key={i}> {error} </li>)}
+              </ul> }
             <form onSubmit={this.submit}>
               <div><input id="firstName" name="firstName" type="text" className="" placeholder="First Name" onChange={this.change} value={firstName}></input></div>
               <div><input id="lastName" name="lastName" type="text" className="" placeholder="Last Name" onChange={this.change} value={lastName}></input></div>
@@ -99,7 +102,7 @@ class UserSignUp extends Component {
 
 function ErrorsDisplay({errors}) {
   let errorsDisplay = null;
-  if(errors.lenth) {
+  if(errors.length) {
     errorsDisplay = (
       <div>
             <h2 class="validation--errors--label">Validation errors</h2>

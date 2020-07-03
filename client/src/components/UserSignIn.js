@@ -19,6 +19,9 @@ class UserSignIn extends Component {
         <div className="grid-33 centered signin">
           <h1>Sign In</h1>
           <div>
+          { <ul>
+                {errors.map((error, i) => <li key={i}> {error} </li>)}
+              </ul> }
             <form onSubmit={this.submit}>
               <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" onChange={this.change} value={emailAddress}></input></div>
               <div><input id="password" name="password" type="password" className="" placeholder="Password" onChange={this.change} value={password}></input></div>
