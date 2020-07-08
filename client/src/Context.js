@@ -7,7 +7,7 @@ const Context = React.createContext();
 export class Provider extends Component {
 
   state = {
-        
+        authenticatedUser: null,
   }
 
   constructor() {
@@ -16,25 +16,14 @@ export class Provider extends Component {
 
   }
    
-     /* componentDidMount() {
-        this.getCourse();
-      }
-      getCourse(){
-        axios.get('http://localhost:5000/api/courses').then(response =>{
-          this.setState({
-            courses: response.data,
-          });
-          console.log(this.state.courses);
-        }).catch(error => {
-          console.log('error getting courses', error);
-        })
-      }*/
       render() {
-
+        const { authenticatedUser } = this.state;
         const value = {
+          authenticatedUser,
             data: this.data,
             actions: { 
               signIn: this.signIn,
+              signOut: this.signOut,
             },
         }
           return (
@@ -46,11 +35,24 @@ export class Provider extends Component {
 
       signIn = async (emailAddress, password) => {
         const user = await this.data.getUser(emailAddress, password);
+        if(user !== null) {
+          this.setState( () => {
+            return {
+              authenticatedUser: user,
+            }
+          })
+        }
         return user;
+      }
+
+      signOut = () => {
+        this.setState({
+          authenticatedUser: null,
+        })
       }
 }
 
-//export const Consumer = Context.Consumer;
+export const { Consumer } = Context;
 
 export default function withContext(Component) {
     return function ContextComponent(props) {

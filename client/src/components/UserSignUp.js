@@ -100,20 +100,4 @@ class UserSignUp extends Component {
    }
 }
 
-function ErrorsDisplay({errors}) {
-  let errorsDisplay = null;
-  if(errors.length) {
-    errorsDisplay = (
-      <div>
-            <h2 class="validation--errors--label">Validation errors</h2>
-            <div class="validation-errors">
-              <ul>
-                {errors.map((error, i) => <li key={i}> {error} </li>)}
-              </ul>
-            </div>
-          </div>
-    );
-  }
-  return errorsDisplay;
-}
 export default UserSignUp;
