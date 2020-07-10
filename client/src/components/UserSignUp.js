@@ -81,6 +81,10 @@ class UserSignUp extends Component {
       this.setState({ errors })
       console.log(errors);
     } else {
+      context.actions.signIn(emailAddress, password)
+      .then( () => {
+        this.props.history.push('/');
+      });
       console.log(`${emailAddress} is successful signed up!` );
     }
   }).catch(err => {

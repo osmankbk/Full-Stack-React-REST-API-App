@@ -28,7 +28,7 @@ class UserSignIn extends Component {
               <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign In</button><button className="button button-secondary" onClick={ this.cancle }>Cancel</button></div>
             </form>
           </div>
-          <p>Don't have a user account? <a href="sign-up.html"><Link to="/signup">Click here</Link></a>to sign up!</p>
+          <p>Don't have a user account? <a href="sign-up.html"><Link to="/signup">Click here</Link></a> to sign up!</p>
         </div>
       </div>
        );
@@ -53,6 +53,7 @@ class UserSignIn extends Component {
 
    handleSubmit = () => {
    const { context } = this.props;
+   const { from } = this.props.location.state || { from: {pathname: '/' } }
    const { 
      emailAddress,
      password,
@@ -65,8 +66,9 @@ class UserSignIn extends Component {
        return { errors: [ 'Sign-in was Unsuccessful'] }
      })
    } else {
-    this.props.history.push('/');
+    this.props.history.push(from);
     console.log(`SUCCESS! ${emailAddress} is now signed in!`);
+    console.log(user);
    }
  }).catch(err => {
    console.log(err);

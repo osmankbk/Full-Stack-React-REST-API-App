@@ -7,13 +7,12 @@ class CourseDetail extends Component {
       const authUser = context.authenticatedUser;
         return (
           <div>
-          <div class="actions--bar">
-            {authUser ? <div class="bounds">
+          { authUser ? <div class="actions--bar">
+            <div class="bounds">
               <div class="grid-100"><span><a class="button" href="update-course.html">Update Course</a><a class="button" href="#">Delete Course</a></span><a
                   class="button button-secondary" href="index.html">Return to List</a></div>
-            </div> : null}
-            
-          </div>
+            </div>
+          </div> : null }
           <div class="bounds course--detail">
             <div class="grid-66">
               <div class="course--header">
