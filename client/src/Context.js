@@ -8,8 +8,12 @@ export class Provider extends Component {
 
   state = {
         authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
-        //courses: [],
+        courses: [],
   }
+  /*componentDidMount() {
+    this.getApiCourses(); 
+    console.log(this.state.courses);
+  }*/
 
   constructor() {
     super();
@@ -25,8 +29,10 @@ export class Provider extends Component {
             actions: { 
               signIn: this.signIn,
               signOut: this.signOut,
+              //getApiCourses: this.getApiCourses,
             },
         }
+
           return (
               <Context.Provider value={value}>
                   {this.props.children}
@@ -53,9 +59,17 @@ export class Provider extends Component {
         })
         Cookies.remove('authenticatedUser');
       }
-      /*getApiCourses(course) {
-        const cou
-      }*/
+      getApiCourses = async () => {
+        const courses = await this.data.getCourses();
+        if(courses !== null) {
+          this.setState(() => {
+            return {
+              courses: courses
+            }
+          })
+        }
+        return courses;
+      }
 }
 
 export const { Consumer } = Context;

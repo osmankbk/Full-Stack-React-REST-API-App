@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Courses extends Component {
-
+class Courses extends Component { 
+ 
     render() {
         return (
             <div className="bounds">

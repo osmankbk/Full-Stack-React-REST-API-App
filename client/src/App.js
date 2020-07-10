@@ -19,7 +19,7 @@ import NotFound from './components/NotFound'
 import Forbidden from './components/Forbidden';
 import UnHandledError from './components/UnHandledError';
 
-
+const UserCoursesWithContext = withContext(Courses);
 const UserHeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
@@ -38,7 +38,7 @@ const App = () => {
       <UserHeaderWithContext />
       <Switch>
         <Redirect exact from="/" to="/courses" />
-        <Route exact path="/courses" component={Courses} />
+        <Route exact path="/courses" component={UserCoursesWithContext} />
         <PrivateRoute path="/courses/create" component={UserCreateCourseWithContext} />
         <PrivateRoute path="/courses/:id/update" component={UserUpdateCourseWithContext} />
         <Route path="/courses/:id" component={UserCourseDetailWithContext} />
