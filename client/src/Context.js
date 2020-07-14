@@ -8,12 +8,8 @@ export class Provider extends Component {
 
   state = {
         authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
-        courses: [],
+        authPassword: Cookies.getJSON('authPassword') || null,
   }
-  /*componentDidMount() {
-    this.getApiCourses(); 
-    console.log(this.state.courses);
-  }*/
 
   constructor() {
     super();
@@ -22,14 +18,16 @@ export class Provider extends Component {
   }
    
       render() {
-        const { authenticatedUser } = this.state;
+        const { authenticatedUser, authPassword, course } = this.state;
         const value = {
           authenticatedUser,
+          authPassword,
+          course,
             data: this.data,
             actions: { 
               signIn: this.signIn,
               signOut: this.signOut,
-              //getApiCourses: this.getApiCourses,
+              getCourse: this.getACourse,
             },
         }
 
@@ -46,9 +44,13 @@ export class Provider extends Component {
           this.setState( () => {
             return {
               authenticatedUser: user,
+              authPassword: password,
             }
           });
+          console.log(user);
           Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+          Cookies.set('authPassword', JSON.stringify(password), { expires: 1 });
+
         }
         return user;
       }
@@ -59,6 +61,7 @@ export class Provider extends Component {
         })
         Cookies.remove('authenticatedUser');
       }
+
       getApiCourses = async () => {
         const courses = await this.data.getCourses();
         if(courses !== null) {

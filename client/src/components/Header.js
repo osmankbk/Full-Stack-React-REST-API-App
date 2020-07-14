@@ -13,9 +13,9 @@ class Header extends Component{
           <h1 className="header--logo">Courses</h1>
           {authUser ?  <nav>
           <span>Welcome, {authUser.emailAddress}</span>
-          <Link to="/signup"><a className="signup" href="sign-up.html">Sign Up</a></Link><Link to="/signout"><a className="signin" href="sign-in.html">Sign Out</a></Link>
+          <Link to="/signout"><a className="signin" href="sign-in.html">Sign Out</a></Link>
           </nav> :  <nav>
-          <Link to="/signup"><a className="signup" href="sign-up.html">Sign Up</a></Link><Link to="/signin"><a className="signin" href="sign-in.html">Sign In</a></Link>
+          <Link to="/signup"><a className="signup" >Sign Up</a></Link><Link to="/signin"><a className="signin" href="sign-in.html">Sign In</a></Link>
           </nav>}
          
         </div>

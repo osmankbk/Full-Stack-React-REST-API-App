@@ -53,6 +53,7 @@ class UserSignIn extends Component {
 
    handleSubmit = () => {
    const { context } = this.props;
+   //const passwordAuth = context.authPassword;
    const { from } = this.props.location.state || { from: {pathname: '/' } }
    const { 
      emailAddress,
@@ -68,7 +69,6 @@ class UserSignIn extends Component {
    } else {
     this.props.history.push(from);
     console.log(`SUCCESS! ${emailAddress} is now signed in!`);
-    console.log(user);
    }
  }).catch(err => {
    console.log(err);

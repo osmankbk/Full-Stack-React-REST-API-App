@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 class CreateCourse extends Component {
     state = {
+      autheUser: this.props.context.authenticatedUser,
+      userId: this.props.context.authenticatedUser.id,
       title: '',
       description: '',
       estimatedTime: '',
@@ -11,7 +13,8 @@ class CreateCourse extends Component {
     }
 
    render() {
-      const { title, 
+      const {
+         title, 
         description,
         estimatedTime, 
         materialsNeeded,
@@ -36,10 +39,10 @@ class CreateCourse extends Component {
                 <h4 className="course--label">Course</h4>
                 <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
                    onChange={this.change} value={title}></input></div>
-                <p>By Joe Smith</p>
+                <p>{`By ${this.state.autheUser.firstName} ${this.state.autheUser.lastName}`}</p>
               </div>
               <div className="course--description">
-                <div><textarea id="description" name="description" className="" placeholder="Course description..."></textarea></div>
+                <div><textarea id="description" name="description" className="" placeholder="Course description..." onChange={this.change} value={description}></textarea></div>
               </div>
             </div>
             <div className="grid-25 grid-right">
@@ -52,7 +55,7 @@ class CreateCourse extends Component {
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..."></textarea></div>
+                    <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." onChange={this.change} value={materialsNeeded}></textarea></div>
                   </li>
                 </ul>
               </div>
@@ -80,9 +83,13 @@ class CreateCourse extends Component {
    }
    handleSubmit = () => {
      const { context } = this.props;
-     const { emailAddress, password } = context.authenticatedUser;
+     const { emailAddress } = context.authenticatedUser;
+     const password = context.authPassword;
 
-    const { title, 
+    const { 
+      courseId,
+      userId,
+      title, 
       description, 
       estimatedTime, 
       materialsNeeded,
@@ -90,6 +97,8 @@ class CreateCourse extends Component {
     } = this.state;
 
     const course = {
+      courseId,
+      userId,
       title,
       description,
       estimatedTime,
@@ -102,7 +111,7 @@ class CreateCourse extends Component {
         this.setState({ errors });
       } else {
         console.log(`${title} is SUCCESSFULLY created!`);
-        this.props.history.push('/');
+        this.props.history.push(`/`);
       }
     }).catch(err => {
       console.log(err);
