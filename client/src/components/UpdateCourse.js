@@ -103,10 +103,9 @@ class UpdateCourse extends Component {
     updateACourse = () => {
       const { context } = this.props;
       const emailAddress = this.state.autheUser.emailAddress;
-      const password = this.props.context.authPassword;
+      const password = prompt('Please Enter Your Password To Proceede!');
       const courseUserId = this.state.courseUser.id;
       const { userId } = this.state;
-      console.log(password);
       const {
         courseId,
         title,

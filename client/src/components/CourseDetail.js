@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 class CourseDetail extends Component {
     state = {
       courses: [],
-      courseUser: ''
+      courseUser: '',
+      autheUser: this.props.context.authenticatedUser,
+      userId: this.props.context.authenticatedUser.id,
+      courseId: '',
     }
 
     componentDidMount() {
@@ -16,6 +19,7 @@ class CourseDetail extends Component {
             this.setState({
               courses: response,
               courseUser: response.User,
+              courseId: response.id,
             })
           } else {
             this.props.history.push('/notFound');
@@ -69,7 +73,7 @@ class CourseDetail extends Component {
       if(authUser && this.state.courseUser.id === authUser.id) {
        return <div class="actions--bar">
         <div class="bounds">
-          <div class="grid-100"><span><Link to={this.props.location.pathname + '/update'}><a class="button" href="update-course.html">Update Course</a></Link><a class="button" href="#">Delete Course</a></span><Link to='/'><a
+          <div class="grid-100"><span><Link to={this.props.location.pathname + '/update'}><a class="button" href="update-course.html">Update Course</a></Link><a class="button" onClick={this.delete}>Delete Course</a></span><Link to='/'><a
               class="button button-secondary" href="index.html">Return to List</a></Link></div>
         </div>
       </div>
@@ -77,8 +81,34 @@ class CourseDetail extends Component {
         return null;
       }
     }
-    
+    delete = (event) => {
+      event.preventDefault();
+      this.deleteACourse();
+    }
 
+    deleteACourse = () => {
+      const { context } = this.props;
+      const emailAddress = this.state.autheUser.emailAddress;
+      const password = prompt('Please Enter Your Password To Proceede!');
+      const courseUserId = this.state.courseUser.id;
+      const { userId, courseId } = this.state;
+      if(userId === courseUserId) {
+        context.data.deleteCourse(courseId, emailAddress, password)
+        .then(response => {
+          if(response) {
+            this.props.history.push('/forbidden');
+            console.log(response);
+          } else{
+            this.props.history.push('/');
+          }
+        }).catch(errors => {
+          console.log(errors);
+        })
+      } else {
+        this.props.history.push('/forbidden');
+      }
+    }
+    
 }
 
 export default CourseDetail;

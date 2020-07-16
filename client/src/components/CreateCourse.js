@@ -84,7 +84,7 @@ class CreateCourse extends Component {
    handleSubmit = () => {
      const { context } = this.props;
      const { emailAddress } = context.authenticatedUser;
-     const password = context.authPassword;
+     const password = prompt('Please Enter Your Password To Proceede!');
 
     const { 
       courseId,
