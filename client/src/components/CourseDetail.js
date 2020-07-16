@@ -5,7 +5,7 @@ class CourseDetail extends Component {
     state = {
       courses: [],
       courseUser: ''
-,    }
+    }
 
     componentDidMount() {
       const { context } = this.props;
@@ -25,18 +25,11 @@ class CourseDetail extends Component {
       })
     }
     render() {
-      const { context } = this.props;
-      const authUser = context.authenticatedUser;
       const { courses } = this.state;
 
         return (
           <div>
-          { authUser ? <div class="actions--bar">
-            <div class="bounds">
-              <div class="grid-100"><span><a class="button" href="update-course.html">Update Course</a><a class="button" href="#">Delete Course</a></span><Link to='/'><a
-                  class="button button-secondary" href="index.html">Return to List</a></Link></div>
-            </div>
-          </div> : null }
+            { this.restrictAccess() }
           <div class="bounds course--detail">
             <div class="grid-66">
               <div class="course--header">
@@ -68,6 +61,21 @@ class CourseDetail extends Component {
           </div>
         </div>
         );
+    }
+
+    restrictAccess = () => {
+      const authUser = this.props.context.authenticatedUser;
+      
+      if(authUser && this.state.courseUser.id === authUser.id) {
+       return <div class="actions--bar">
+        <div class="bounds">
+          <div class="grid-100"><span><Link to={this.props.location.pathname + '/update'}><a class="button" href="update-course.html">Update Course</a></Link><a class="button" href="#">Delete Course</a></span><Link to='/'><a
+              class="button button-secondary" href="index.html">Return to List</a></Link></div>
+        </div>
+      </div>
+      } else {
+        return null;
+      }
     }
     
 

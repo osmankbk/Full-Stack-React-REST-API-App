@@ -1,32 +1,67 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+const BrowserHistory = require('react-router').default;
 
 class UpdateCourse extends Component {
-
+  state = {
+    autheUser: this.props.context.authenticatedUser,
+    userId: this.props.context.authenticatedUser.id,
+    title: '',
+    description: '',
+    estimatedTime: '',
+    materialsNeeded: '',
+    courses: [],
+    courseId: '',
+    courseUser: ''
+  }
+  componentDidMount() {
+    const { context } = this.props;
+    let courseId = this.props.match.params.id;
+      context.data.getCourse(courseId)
+      .then(response => {
+        if(response) {
+          this.setState({
+            courses: response,
+            courseId: response.id,
+            courseUser: response.User,
+            title: response.title,
+            description: response.description,
+            estimatedTime: response.estimatedTime,
+            materialsNeeded: response.materialsNeeded,
+          })
+          console.log(this.state.userId, this.state.courseUser.id);
+        } else {
+          this.props.history.push('/notFound');
+        }
+      }).catch(errors => {
+        console.log(errors);
+    })
+  }
     render() {
+
+      const {
+        courses,
+        title,
+    description,
+    estimatedTime,
+    materialsNeeded
+         } = this.state;
+      
+
         return (
             <div class="bounds course--detail">
         <h1>Update Course</h1>
         <div>
-          <form>
+          <form onSubmit={this.submit}>
             <div class="grid-66">
               <div class="course--header">
                 <h4 class="course--label">Course</h4>
                 <div><input id="title" name="title" type="text" class="input-title course--title--input" placeholder="Course title..."
-                    value="Build a Basic Bookcase"></input></div>
-                <p>By Joe Smith</p>
+                    onChange={this.change} value={title}></input></div>
+                <p>{`By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}`}</p>
               </div>
               <div class="course--description">
-                <div><textarea id="description" name="description" class="" placeholder="Course description...">High-end furniture projects are great to dream about. But unless you have a well-equipped shop and some serious woodworking experience to draw on, it can be difficult to turn the dream into a reality.
-
-Not every piece of furniture needs to be a museum showpiece, though. Often a simple design does the job just as well and the experience gained in completing it goes a long way toward making the next project even better.
-
-Our pine bookcase, for example, features simple construction and it's designed to be built with basic woodworking tools. Yet, the finished project is a worthy and useful addition to any room of the house. While it's meant to rest on the floor, you can convert the bookcase to a wall-mounted storage unit by leaving off the baseboard. You can secure the cabinet to the wall by screwing through the cabinet cleats into the wall studs.
-
-We made the case out of materials available at most building-supply dealers and lumberyards, including 1/2 x 3/4-in. parting strip, 1 x 2, 1 x 4 and 1 x 10 common pine and 1/4-in.-thick lauan plywood. Assembly is quick and easy with glue and nails, and when you're done with construction you have the option of a painted or clear finish.
-
-As for basic tools, you'll need a portable circular saw, hammer, block plane, combination square, tape measure, metal rule, two clamps, nail set and putty knife. Other supplies include glue, nails, sandpaper, wood filler and varnish or paint and shellac.
-
-The specifications that follow will produce a bookcase with overall dimensions of 10 3/4 in. deep x 34 in. wide x 48 in. tall. While the depth of the case is directly tied to the 1 x 10 stock, you can vary the height, width and shelf spacing to suit your needs. Keep in mind, though, that extending the width of the cabinet may require the addition of central shelf supports.</textarea></div>
+                <div><textarea id="description" name="description" class="" placeholder="Course description..." onChange={this.change} value={description}></textarea></div>
               </div>
             </div>
             <div class="grid-25 grid-right">
@@ -35,30 +70,75 @@ The specifications that follow will produce a bookcase with overall dimensions o
                   <li class="course--stats--list--item">
                     <h4>Estimated Time</h4>
                     <div><input id="estimatedTime" name="estimatedTime" type="text" class="course--time--input"
-                        placeholder="Hours" value="14 hours"></input></div>
+                        placeholder="Hours" onChange={this.change} value={estimatedTime}></input></div>
                   </li>
                   <li class="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" name="materialsNeeded" class="" placeholder="List materials...">* 1/2 x 3/4 inch parting strip
-* 1 x 2 common pine
-* 1 x 4 common pine
-* 1 x 10 common pine
-* 1/4 inch thick lauan plywood
-* Finishing Nails
-* Sandpaper
-* Wood Glue
-* Wood Filler
-* Minwax Oil Based Polyurethane
-</textarea></div>
+                    <div><textarea id="materialsNeeded" name="materialsNeeded" class="" placeholder="List materials..." onChange={this.change} value={materialsNeeded}></textarea></div>
                   </li>
                 </ul>
               </div>
             </div>
-            <div class="grid-100 pad-bottom"><button class="button" type="submit">Update Course</button><button class="button button-secondary" onclick="event.preventDefault(); location.href='course-detail.html';">Cancel</button></div>
+            <div class="grid-100 pad-bottom"><button class="button" type="submit">Update Course</button><Link to='/'><button class="button button-secondary" /*onclick="event.preventDefault(); location.href='course-detail.html';"*/>Cancel</button></Link></div>
           </form>
         </div>
       </div>
         );
+    }
+    submit = (event) => {
+      event.preventDefault();
+      this.updateACourse();
+    }
+    change = (event) => {
+      const name = event.target.name;
+      const value = event.target.value
+ 
+      this.setState( () => {
+        return {
+           [name]: value,
+        }
+      })
+    }
+
+    updateACourse = () => {
+      const { context } = this.props;
+      const emailAddress = this.state.autheUser.emailAddress;
+      const password = this.props.context.authPassword;
+      const courseUserId = this.state.courseUser.id;
+      const { userId } = this.state;
+      console.log(password);
+      const {
+        courseId,
+        title,
+        description,
+        estimatedTime,
+        materialsNeeded
+         } = this.state;
+
+         const course = {
+           courseId,
+           title,
+           description,
+           estimatedTime,
+           materialsNeeded,
+           courseUserId
+         }
+      if(courseUserId === userId) {
+        context.data.updateCourse(courseId, course, emailAddress, password)
+        .then(response => {
+          if(response) {
+            this.props.history.push('/error');
+            console.log(response);
+          }else {
+            let courseId = this.props.match.params.id;
+            this.props.history.push(`/courses/${courseId}`);
+          }
+        }).catch(errors => {
+          console.log(errors);
+        })
+      } else {
+        this.props.history.push('/forbidden');
+      }
     }
 }
 
