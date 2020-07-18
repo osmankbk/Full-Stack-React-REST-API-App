@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+const ReactMarkDown = require('react-markdown');
 
 class CourseDetail extends Component {
     state = {
@@ -15,22 +16,23 @@ class CourseDetail extends Component {
       let courseId = this.props.match.params.id;
         context.data.getCourse(courseId)
         .then(response => {
-          if(response) {
+          if(response !== 'course not available') {
             this.setState({
               courses: response,
               courseUser: response.User,
               courseId: response.id,
             })
-          } else {
-            this.props.history.push('/notFound');
+          } else if(response === 'course not available') {
+            this.props.history.push('/NotFound');
+          }else {
+            this.props.history.push('/error');
           }
         }).catch(errors => {
           console.log(errors);
       })
     }
     render() {
-      const { courses } = this.state;
-
+      const { courses } = this.state;      
         return (
           <div>
             { this.restrictAccess() }
@@ -42,8 +44,7 @@ class CourseDetail extends Component {
                 <p>{`By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}`}</p>
               </div>
               <div class="course--description">
-                <p>{courses.description}</p>
-                
+                {<ReactMarkDown source={courses.description} />}
               </div>
             </div>
             <div class="grid-25 grid-right">
@@ -55,9 +56,7 @@ class CourseDetail extends Component {
                   </li>
                   <li class="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                   <ul>
-                      <li>{courses.materialsNeeded}</li>
-                    </ul>
+                      {<ReactMarkDown sourse={courses.materialsNeeded}/>}
                   </li>
                 </ul>
               </div>
@@ -89,7 +88,7 @@ class CourseDetail extends Component {
     deleteACourse = () => {
       const { context } = this.props;
       const emailAddress = this.state.autheUser.emailAddress;
-      const password = prompt('Please Enter Your Password To Proceede!');
+      const password = this.props.context.authPassword;
       const courseUserId = this.state.courseUser.id;
       const { userId, courseId } = this.state;
       if(userId === courseUserId) {

@@ -12,7 +12,8 @@ class UpdateCourse extends Component {
     materialsNeeded: '',
     courses: [],
     courseId: '',
-    courseUser: ''
+    courseUser: '',
+    errors: []
   }
   componentDidMount() {
     const { context } = this.props;
@@ -40,7 +41,7 @@ class UpdateCourse extends Component {
     render() {
 
       const {
-        courses,
+        errors,
         title,
     description,
     estimatedTime,
@@ -52,10 +53,15 @@ class UpdateCourse extends Component {
             <div class="bounds course--detail">
         <h1>Update Course</h1>
         <div>
-          <form onSubmit={this.submit}>
+          <form>
             <div class="grid-66">
               <div class="course--header">
                 <h4 class="course--label">Course</h4>
+                {<ul>
+                  {errors.map((error, i) => 
+                    <li key={i}>{error}</li>
+                  )}
+                </ul>}
                 <div><input id="title" name="title" type="text" class="input-title course--title--input" placeholder="Course title..."
                     onChange={this.change} value={title}></input></div>
                 <p>{`By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}`}</p>
@@ -79,8 +85,8 @@ class UpdateCourse extends Component {
                 </ul>
               </div>
             </div>
-            <div class="grid-100 pad-bottom"><button class="button" type="submit">Update Course</button><Link to='/'><button class="button button-secondary" /*onclick="event.preventDefault(); location.href='course-detail.html';"*/>Cancel</button></Link></div>
           </form>
+          <div class="grid-100 pad-bottom"><button class="button" type="submit" onClick={this.submit}>Update Course</button><button class="button button-secondary" onClick={this.cancle}>Cancel</button></div>
         </div>
       </div>
         );
@@ -100,10 +106,10 @@ class UpdateCourse extends Component {
       })
     }
 
-    updateACourse = () => {
+    updateACourse = (event) => {
       const { context } = this.props;
       const emailAddress = this.state.autheUser.emailAddress;
-      const password = prompt('Please Enter Your Password To Proceede!');
+      const password = this.props.context.authPassword;
       const courseUserId = this.state.courseUser.id;
       const { userId } = this.state;
       const {
@@ -125,12 +131,20 @@ class UpdateCourse extends Component {
       if(courseUserId === userId) {
         context.data.updateCourse(courseId, course, emailAddress, password)
         .then(response => {
-          if(response) {
-            this.props.history.push('/error');
-            console.log(response);
-          }else {
+          if(!response) {
             let courseId = this.props.match.params.id;
-            this.props.history.push(`/courses/${courseId}`);
+            this.props.history.push(`/courses/${courseId}`);            
+          }else if(response && response !== 'course not available') {
+            this.setState({
+              errors: response,
+            })
+            console.log(response);
+          }
+          else if(response && response === 'course not available'){
+            this.props.history.push('/notFound');
+            console.log(response);
+          } else {
+            this.props.history.push('/error');
           }
         }).catch(errors => {
           console.log(errors);
@@ -138,6 +152,9 @@ class UpdateCourse extends Component {
       } else {
         this.props.history.push('/forbidden');
       }
+    }
+    cancle = () =>{
+      this.props.history.goBack(); 
     }
 }
 

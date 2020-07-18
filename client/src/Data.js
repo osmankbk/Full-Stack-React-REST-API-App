@@ -52,7 +52,7 @@ export default class Data {
             return response.json().then(data => data);
         } else if(response.status === 404) {
             return response.json().then(data => {
-                return data.errors;
+                return data.error;
             })
         } else {
             throw new Error();
@@ -79,6 +79,10 @@ export default class Data {
         } else if(response.status === 400) {
             return response.json().then(data => {
                 return data.errors;
+            });
+        } else if(response.status === 404) {
+            return response.json().then(data => {
+                return data.error;
             });
         }else {
             throw new Error();

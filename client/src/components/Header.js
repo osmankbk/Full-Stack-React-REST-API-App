@@ -12,7 +12,7 @@ class Header extends Component{
         <div className="bounds">
           <h1 className="header--logo">Courses</h1>
           {authUser ?  <nav>
-          <span>Welcome, {authUser.emailAddress}</span>
+          <span>Welcome, {`${authUser.firstName} ${authUser.lastName}`}</span>
           <Link to="/signout"><a className="signin" href="sign-in.html">Sign Out</a></Link>
           </nav> :  <nav>
           <Link to="/signup"><a className="signup" >Sign Up</a></Link><Link to="/signin"><a className="signin" href="sign-in.html">Sign In</a></Link>

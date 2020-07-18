@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UnHandledError = () => {
+const UnhandledError = () => {
     return(
         <div>
         <div class="bounds">
@@ -11,4 +11,4 @@ const UnHandledError = () => {
     );
 }
 
-export default UnHandledError;
+export default UnhandledError;
