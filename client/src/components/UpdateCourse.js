@@ -41,6 +41,7 @@ class UpdateCourse extends Component {
     render() {
 
       const {
+        courseUser,
         errors,
         title,
     description,
@@ -64,7 +65,7 @@ class UpdateCourse extends Component {
                 </ul>}
                 <div><input id="title" name="title" type="text" class="input-title course--title--input" placeholder="Course title..."
                     onChange={this.change} value={title}></input></div>
-                <p>{`By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}`}</p>
+                <p>{courseUser? `By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}` : this.props.history.push('/error'), console.log('No course user found!')}</p>
               </div>
               <div class="course--description">
                 <div><textarea id="description" name="description" class="" placeholder="Course description..." onChange={this.change} value={description}></textarea></div>
