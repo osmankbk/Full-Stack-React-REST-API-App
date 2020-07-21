@@ -1,3 +1,14 @@
+/******************************************
+Treehouse Techdegree:
+FSJS project 10 - Full Stack App With REST API
+******************************************/
+
+//Title: Treehouse Project 10
+//Project: Full Stack App With REST API
+//Goal: exceed expectation
+
+
+//This is the container for the components of my app.
 import React from 'react';
 import { 
   BrowserRouter as Router,

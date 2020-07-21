@@ -1,3 +1,5 @@
+//This holds the list of courses on my page. 
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 

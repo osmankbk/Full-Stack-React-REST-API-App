@@ -1,3 +1,5 @@
+//This file contains all my HTTP functions
+
 import config from './config.js';
 
 export default class Data {

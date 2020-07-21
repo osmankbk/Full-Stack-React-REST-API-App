@@ -1,13 +1,13 @@
+//The componenet that displays the contents of a course.
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-const ReactMarkDown = require('react-markdown');
+import ReactMarkDown from 'react-markdown';
 
 class CourseDetail extends Component {
     state = {
       courses: [],
       courseUser: '',
       autheUser: this.props.context.authenticatedUser,
-      //userId: this.props.context.authenticatedUser.id,
       courseId: '',
     }
 
@@ -44,7 +44,7 @@ class CourseDetail extends Component {
                 <p>{`By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}`}</p>
               </div>
               <div className="course--description">
-                {<ReactMarkDown source={courses.description} />}
+                {<ReactMarkDown escapeHtml={false} source={courses.description} />}
               </div>
             </div>
             <div className="grid-25 grid-right">
@@ -56,7 +56,7 @@ class CourseDetail extends Component {
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                      {<ReactMarkDown sourse={courses.materialsNeeded}/>}
+                      {<ReactMarkDown escapeHtml={false} source={courses.materialsNeeded}/>}
                   </li>
                 </ul>
               </div>

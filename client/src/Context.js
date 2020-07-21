@@ -1,3 +1,6 @@
+//Use React Context to share state & props to the rest of my components
+//Imported the files Needed for that
+
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
 import Data from './Data';

@@ -1,3 +1,4 @@
+//This calls the signOut function when mounted.
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
