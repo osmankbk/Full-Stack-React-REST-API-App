@@ -7,7 +7,7 @@ class CourseDetail extends Component {
       courses: [],
       courseUser: '',
       autheUser: this.props.context.authenticatedUser,
-      userId: this.props.context.authenticatedUser.id,
+      //userId: this.props.context.authenticatedUser.id,
       courseId: '',
     }
 
@@ -36,25 +36,25 @@ class CourseDetail extends Component {
         return (
           <div>
             { this.restrictAccess() }
-          <div class="bounds course--detail">
-            <div class="grid-66">
-              <div class="course--header">
-                <h4 class="course--label">Course</h4>
-                <h3 class="course--title">{courses.title}</h3>
+          <div className="bounds course--detail">
+            <div className="grid-66">
+              <div className="course--header">
+                <h4 className="course--label">Course</h4>
+                <h3 className="course--title">{courses.title}</h3>
                 <p>{`By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}`}</p>
               </div>
-              <div class="course--description">
+              <div className="course--description">
                 {<ReactMarkDown source={courses.description} />}
               </div>
             </div>
-            <div class="grid-25 grid-right">
-              <div class="course--stats">
-                <ul class="course--stats--list">
-                  <li class="course--stats--list--item">
+            <div className="grid-25 grid-right">
+              <div className="course--stats">
+                <ul className="course--stats--list">
+                  <li className="course--stats--list--item">
                     <h4>Estimated Time</h4>
                     <h3>{courses.estimatedTime}</h3>
                   </li>
-                  <li class="course--stats--list--item">
+                  <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
                       {<ReactMarkDown sourse={courses.materialsNeeded}/>}
                   </li>
@@ -70,10 +70,10 @@ class CourseDetail extends Component {
       const authUser = this.props.context.authenticatedUser;
       
       if(authUser && this.state.courseUser.id === authUser.id) {
-       return <div class="actions--bar">
-        <div class="bounds">
-          <div class="grid-100"><span><Link to={this.props.location.pathname + '/update'}><a class="button" href="update-course.html">Update Course</a></Link><a class="button" onClick={this.delete}>Delete Course</a></span><Link to='/'><a
-              class="button button-secondary" href="index.html">Return to List</a></Link></div>
+       return <div className="actions--bar">
+        <div className="bounds">
+          <div className="grid-100"><span><Link to={this.props.location.pathname + '/update'} className="button">Update Course</Link><a className="button" onClick={this.delete}>Delete Course</a></span><Link to='/' className="button button-secondary">
+            Return to List</Link></div>
         </div>
       </div>
       } else {
@@ -90,7 +90,8 @@ class CourseDetail extends Component {
       const emailAddress = this.state.autheUser.emailAddress;
       const password = this.props.context.authPassword;
       const courseUserId = this.state.courseUser.id;
-      const { userId, courseId } = this.state;
+      const userId = this.state.autheUser.id;
+      const { courseId } = this.state;
       if(userId === courseUserId) {
         context.data.deleteCourse(courseId, emailAddress, password)
         .then(response => {

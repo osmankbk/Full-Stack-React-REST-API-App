@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-const BrowserHistory = require('react-router').default;
 
 class UpdateCourse extends Component {
+  _isMounted = false;
+
   state = {
     autheUser: this.props.context.authenticatedUser,
     userId: this.props.context.authenticatedUser.id,
@@ -16,6 +16,8 @@ class UpdateCourse extends Component {
     errors: []
   }
   componentDidMount() {
+    this._isMounted = true;
+
     const { context } = this.props;
     let courseId = this.props.match.params.id;
       context.data.getCourse(courseId)
@@ -30,7 +32,6 @@ class UpdateCourse extends Component {
             estimatedTime: response.estimatedTime,
             materialsNeeded: response.materialsNeeded,
           })
-          console.log(this.state.userId, this.state.courseUser.id);
         } else {
           this.props.history.push('/notFound');
         }
@@ -38,10 +39,14 @@ class UpdateCourse extends Component {
         console.log(errors);
     })
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  };
+
     render() {
 
       const {
-        courseUser,
         errors,
         title,
     description,
@@ -51,43 +56,43 @@ class UpdateCourse extends Component {
       
 
         return (
-            <div class="bounds course--detail">
+            <div className="bounds course--detail">
         <h1>Update Course</h1>
         <div>
           <form>
-            <div class="grid-66">
-              <div class="course--header">
-                <h4 class="course--label">Course</h4>
+            <div className="grid-66">
+              <div className="course--header">
+                <h4 className="course--label">Course</h4>
                 {<ul>
                   {errors.map((error, i) => 
                     <li key={i}>{error}</li>
                   )}
                 </ul>}
-                <div><input id="title" name="title" type="text" class="input-title course--title--input" placeholder="Course title..."
+                <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
                     onChange={this.change} value={title}></input></div>
-                <p>{courseUser? `By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}` : this.props.history.push('/error'), console.log('No course user found!')}</p>
+                <p>{`By ${this.state.courseUser.firstName} ${this.state.courseUser.lastName}`}</p>
               </div>
-              <div class="course--description">
-                <div><textarea id="description" name="description" class="" placeholder="Course description..." onChange={this.change} value={description}></textarea></div>
+              <div className="course--description">
+                <div><textarea id="description" name="description" className="" placeholder="Course description..." onChange={this.change} value={description}></textarea></div>
               </div>
             </div>
-            <div class="grid-25 grid-right">
-              <div class="course--stats">
-                <ul class="course--stats--list">
-                  <li class="course--stats--list--item">
+            <div className="grid-25 grid-right">
+              <div className="course--stats">
+                <ul className="course--stats--list">
+                  <li className="course--stats--list--item">
                     <h4>Estimated Time</h4>
-                    <div><input id="estimatedTime" name="estimatedTime" type="text" class="course--time--input"
+                    <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input"
                         placeholder="Hours" onChange={this.change} value={estimatedTime}></input></div>
                   </li>
-                  <li class="course--stats--list--item">
+                  <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" name="materialsNeeded" class="" placeholder="List materials..." onChange={this.change} value={materialsNeeded}></textarea></div>
+                    <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." onChange={this.change} value={materialsNeeded}></textarea></div>
                   </li>
                 </ul>
               </div>
             </div>
           </form>
-          <div class="grid-100 pad-bottom"><button class="button" type="submit" onClick={this.submit}>Update Course</button><button class="button button-secondary" onClick={this.cancle}>Cancel</button></div>
+          <div className="grid-100 pad-bottom"><button className="button" type="submit" onClick={this.submit}>Update Course</button><button className="button button-secondary" onClick={this.cancle}>Cancel</button></div>
         </div>
       </div>
         );

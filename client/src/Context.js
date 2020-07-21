@@ -19,11 +19,10 @@ export class Provider extends Component {
   }
    
       render() {
-        const { authenticatedUser, authPassword, course } = this.state;
+        const { authenticatedUser, authPassword} = this.state;
         const value = {
           authenticatedUser,
           authPassword,
-          course,
             data: this.data,
             actions: { 
               signIn: this.signIn,
@@ -59,7 +58,7 @@ export class Provider extends Component {
           authenticatedUser: null,
         })
         Cookies.remove('authenticatedUser');
-      }
+      };
 
       getApiCourses = async () => {
         const courses = await this.data.getCourses();

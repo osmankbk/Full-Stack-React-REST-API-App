@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { render } from 'react-dom';
 
-class Header extends Component{
+const Header = (props) => {
     
-    render() {
-    const { context } = this.props;
+    const { context } = props;
     const authUser = context.authenticatedUser;
       return (
         <div className="header">
@@ -13,16 +11,14 @@ class Header extends Component{
           <h1 className="header--logo">Courses</h1>
           {authUser ?  <nav>
           <span>Welcome, {`${authUser.firstName} ${authUser.lastName}`}</span>
-          <Link to="/signout"><a className="signin" href="sign-in.html">Sign Out</a></Link>
+          <Link to="/signout" className="signin">Sign Out</Link>
           </nav> :  <nav>
-          <Link to="/signup"><a className="signup" >Sign Up</a></Link><Link to="/signin"><a className="signin" href="sign-in.html">Sign In</a></Link>
+          <Link to="/signup">Sign Up</Link><Link to="/signin">Sign In</Link>
           </nav>}
          
         </div>
       </div>
     );
-    }
-   
 }
 
 export default Header;
