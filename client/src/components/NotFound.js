@@ -1,5 +1,6 @@
 import React from 'react';
 
+//This component runs when a course is not found
 const NotFound = () => {
     return(
         <div>

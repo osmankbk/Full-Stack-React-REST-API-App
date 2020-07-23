@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+//This component displays when an authorized user is trying to update a course that's theirs.
 class UpdateCourse extends Component {
   _isMounted = false;
 
@@ -18,23 +19,28 @@ class UpdateCourse extends Component {
   componentDidMount() {
     this._isMounted = true;
 
+//This function makes a get request on mount & shows the result only if the user owns the course
     const { context } = this.props;
     let courseId = this.props.match.params.id;
+    const authUser = this.props.context.authenticatedUser;
       context.data.getCourse(courseId)
-      .then(response => {
-        if(response) {
-          this.setState({
-            courses: response,
-            courseId: response.id,
-            courseUser: response.User,
-            title: response.title,
-            description: response.description,
-            estimatedTime: response.estimatedTime,
-            materialsNeeded: response.materialsNeeded,
-          })
-        } else {
-          this.props.history.push('/notFound');
-        }
+      .then(response => {  
+          if (response) {
+            this.setState({
+              courses: response,
+              courseId: response.id,
+              courseUser: response.User,
+              title: response.title,
+              description: response.description,
+              estimatedTime: response.estimatedTime,
+              materialsNeeded: response.materialsNeeded,
+            })
+            if(!authUser || this.state.courseUser.id !== authUser.id) {
+              this.props.history.push('/forbidden');
+            }
+          } else {
+            this.props.history.push('/notFound');
+          }
       }).catch(errors => {
         console.log(errors);
     })
@@ -97,10 +103,13 @@ class UpdateCourse extends Component {
       </div>
         );
     }
+    //This func runs the update function while preventing the forms default nature  
     submit = (event) => {
       event.preventDefault();
       this.updateACourse();
     }
+
+ //This function runs on change event enabling the inputs value to that of the change events value   
     change = (event) => {
       const name = event.target.name;
       const value = event.target.value
@@ -111,7 +120,7 @@ class UpdateCourse extends Component {
         }
       })
     }
-
+//This func makes PUT request to the server
     updateACourse = (event) => {
       const { context } = this.props;
       const emailAddress = this.state.autheUser.emailAddress;
@@ -159,6 +168,8 @@ class UpdateCourse extends Component {
         this.props.history.push('/forbidden');
       }
     }
+
+//This cancels the update process    
     cancle = () =>{
       this.props.history.goBack(); 
     }

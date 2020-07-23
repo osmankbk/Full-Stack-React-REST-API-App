@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+//This component displays when a user is trying to sign in.
 class UserSignIn extends Component {
   state = {
     emailAddress: '',
@@ -34,6 +35,7 @@ class UserSignIn extends Component {
        );
    }
 
+//This function runs on change event enabling the inputs value to that of the change events value   
    change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -45,15 +47,15 @@ class UserSignIn extends Component {
     });
 
   }
-
+//This func runs the sign in function while preventing the forms default nature  
    submit = (event) => {
     event.preventDefault();
     this.handleSubmit();
    }
 
+//This func makes GET request to the server
    handleSubmit = () => {
    const { context } = this.props;
-   //const passwordAuth = context.authPassword;
    const { from } = this.props.location.state || { from: {pathname: '/' } }
    const { 
      emailAddress,
@@ -77,6 +79,7 @@ class UserSignIn extends Component {
 
   } 
   
+//This cancel the sign in process  
   cancle = () => {
     this.props.history.push('/');
   }

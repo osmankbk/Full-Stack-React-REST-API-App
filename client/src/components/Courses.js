@@ -9,7 +9,7 @@ class Courses extends Component {
       course2: [],
       course3: [],
     }
-    
+//When this component mounts it automatically makes a get request for the first three courses in my database   
     componentDidMount() {
       this.getFirstCourse(1);
       this.getSecondCourse(2);

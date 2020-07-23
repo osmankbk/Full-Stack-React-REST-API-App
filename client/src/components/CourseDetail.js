@@ -10,7 +10,7 @@ class CourseDetail extends Component {
       autheUser: this.props.context.authenticatedUser,
       courseId: '',
     }
-
+//When this component mounts it automatically makes a get request for a course with the same id as the input number
     componentDidMount() {
       const { context } = this.props;
       let courseId = this.props.match.params.id;
@@ -65,7 +65,7 @@ class CourseDetail extends Component {
         </div>
         );
     }
-
+//This function toggles(show/hide) the edit buttons of a course depending on if the user owns it or not.
     restrictAccess = () => {
       const authUser = this.props.context.authenticatedUser;
       
@@ -77,14 +77,20 @@ class CourseDetail extends Component {
         </div>
       </div>
       } else {
-        return null;
+        return <div className="actions--bar">
+        <div className="bounds">
+          <div className="grid-100"><Link to='/' className="button button-secondary">
+            Return to List</Link></div>
+        </div>
+      </div>
       }
     }
+//The call of the delete course function
     delete = (event) => {
       event.preventDefault();
       this.deleteACourse();
     }
-
+//The function deletes a course
     deleteACourse = () => {
       const { context } = this.props;
       const emailAddress = this.state.autheUser.emailAddress;

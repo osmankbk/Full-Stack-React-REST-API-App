@@ -30,6 +30,7 @@ import NotFound from './components/NotFound'
 import Forbidden from './components/Forbidden';
 import UnhandledError from './components/UnhandledError';
 
+//The components pass to "withContext" gain access to all its data and state without using props at every level.
 const UserCoursesWithContext = withContext(Courses);
 const UserHeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);

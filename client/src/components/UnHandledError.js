@@ -1,5 +1,6 @@
 import React from 'react';
 
+//This component runs when an unexpected error occurs.
 const UnhandledError = () => {
     return(
         <div>

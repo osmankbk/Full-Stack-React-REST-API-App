@@ -1,5 +1,5 @@
 import React from 'react';
-
+//This component runs when access is denied
 const Forbidden = () => {
     return(
         <div>

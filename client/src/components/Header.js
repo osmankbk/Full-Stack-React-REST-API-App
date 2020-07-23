@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+//This desplays the log user and log in information
 const Header = (props) => {
     
     const { context } = props;

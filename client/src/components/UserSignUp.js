@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+//This component displays when trying to CREATE a log in.
 class UserSignUp extends Component {
   state = {
     firstName: '',
@@ -45,6 +46,8 @@ class UserSignUp extends Component {
       </div>
        );
    }
+
+//This function runs on change event enabling the inputs value to that of the change events value   
    change = (event) => {
      const name = event.target.name;
      const value = event.target.value;
@@ -57,8 +60,8 @@ class UserSignUp extends Component {
 
    }
 
+//This func makes POST request to the server
    handleSubmit = () => {
-     
      const { context } = this.props;
     const { 
       firstName,
@@ -94,11 +97,13 @@ class UserSignUp extends Component {
 
    }
 
+//This func runs the sign up function while preventing the forms default nature  
    submit = (event) => {
      event.preventDefault();
      this.handleSubmit();
    }
 
+//This cancels the signup process
    cancel = () => {
     this.props.history.push('/');
    }

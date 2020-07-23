@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+//The component that holds the form to create courses
 class CreateCourse extends Component {
     state = {
       autheUser: this.props.context.authenticatedUser,
@@ -66,7 +67,7 @@ class CreateCourse extends Component {
       </div>
        );
    }
-
+//This function runs on change event enabling the inputs value to that of the change events value
    change = (event) => {
      const name = event.target.name;
      const value = event.target.value
@@ -77,10 +78,14 @@ class CreateCourse extends Component {
        }
      })
    }
+
+//This func runs the post function while preventing the forms default nature  
    submit = (event) => {
     event.preventDefault();
     this.handleSubmit();
    }
+
+//This functon makes the post request and handles the response appropriately 
    handleSubmit = () => {
      const { context } = this.props;
      const { emailAddress } = context.authenticatedUser;
