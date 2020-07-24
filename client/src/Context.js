@@ -17,11 +17,13 @@ export class Provider extends Component {
 
   constructor() {
     super();
+//All of my function calls a stored in this variable    
     this.data = new Data();
 
   }
    
       render() {
+//I share my state, props and data to rest of my app from here
         const { authenticatedUser, authPassword} = this.state;
         const value = {
           authenticatedUser,
@@ -40,7 +42,7 @@ export class Provider extends Component {
               </Context.Provider>
           )
       }
-
+//My sign in function
       signIn = async (emailAddress, password) => {
         const user = await this.data.getUser(emailAddress, password);
         if(user !== null) {
@@ -56,26 +58,16 @@ export class Provider extends Component {
         return user;
       }
 
+//Sign Out function
       signOut = () => {
         this.setState({
           authenticatedUser: null,
         })
         Cookies.remove('authenticatedUser');
       };
-
-      getApiCourses = async () => {
-        const courses = await this.data.getCourses();
-        if(courses !== null) {
-          this.setState(() => {
-            return {
-              courses: courses
-            }
-          })
-        }
-        return courses;
-      }
 }
 
+//My consumer high order function
 export const { Consumer } = Context;
 
 export default function withContext(Component) {
