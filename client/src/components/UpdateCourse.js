@@ -25,7 +25,7 @@ class UpdateCourse extends Component {
     const authUser = this.props.context.authenticatedUser;
       context.data.getCourse(courseId)
       .then(response => {  
-          if (response) {
+          if (response !== 'course not available') {
             this.setState({
               courses: response,
               courseId: response.id,
