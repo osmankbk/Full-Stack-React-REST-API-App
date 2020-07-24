@@ -3,6 +3,7 @@
 import config from './config.js';
 
 export default class Data {
+//The DRY HTTP func call for all my HTTP POST/GET requests    
     api(path, method = 'GET', body = null, requiresAuth = false, credentials = null){
         const url = config.apiBaserUrl + path;
 
@@ -23,6 +24,7 @@ export default class Data {
         return fetch(url, options);
     }
 
+//Authenticatin request func
     async getUser(emailAddress, password) {
         const response = await this.api('/users', 'GET', null, true, { emailAddress, password });
         if(response.status === 200) {
@@ -33,7 +35,7 @@ export default class Data {
             throw new Error();
         }
     }
-
+//Creating a user func
     async createUser(user) {
         const response = await this.api('/users', 'POST', user);
         if(response.status === 201) {
@@ -48,6 +50,16 @@ export default class Data {
         }
     }
 
+//Getting all courses func 
+    async getCourses() {
+        const response = await this.api(`/courses`, 'GET');
+        if(response.status === 200) {
+            return response.json().then(data => data);
+        } else {
+            throw new Error();
+        }
+    }
+//Getting a course func
     async getCourse(courseId) {
         const response = await this.api(`/courses/${courseId}`, 'GET');
         if(response.status === 200) {
@@ -61,6 +73,7 @@ export default class Data {
         }
     }
 
+//Creating a course func    
     async createCourse(course, emailAddress, password) {
         const response = await this.api('/courses', 'POST', course, true, { emailAddress, password });
         if(response.status ===  201) {
@@ -74,6 +87,7 @@ export default class Data {
         }
     }
 
+//Updating a course func
     async updateCourse(courseId, course, emailAddress, password) {
         const response = await this.api(`/courses/${courseId}`, 'PUT', course, true, { emailAddress, password });
         if(response.status === 204) {
@@ -91,7 +105,8 @@ export default class Data {
         }
 
     }
-    
+
+//Deleting a course func
     async deleteCourse(courseId, emailAddress, password) {
         const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, {emailAddress, password});
         if(response.status === 204) {
