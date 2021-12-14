@@ -1,6 +1,7 @@
 //My user model
 
 const Sequelize = require('sequelize');
+const bcryptjs = require('bcryptjs');
 
 module.exports = (sequelize) => {
     class User extends Sequelize.Model{};

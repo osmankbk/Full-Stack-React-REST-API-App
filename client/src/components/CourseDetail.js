@@ -72,7 +72,7 @@ class CourseDetail extends Component {
       if(authUser && this.state.courseUser.id === authUser.id) {
        return <div className="actions--bar">
         <div className="bounds">
-          <div className="grid-100"><span><Link to={this.props.location.pathname + '/update'} className="button">Update Course</Link><a className="button" onClick={this.delete}>Delete Course</a></span><Link to='/' className="button button-secondary">
+          <div className="grid-100"><span><Link to={this.props.location.pathname + '/update'} className="button">Update Course</Link><a href='\#' className="button" onClick={this.delete}>Delete Course</a></span><Link to='/' className="button button-secondary">
             Return to List</Link></div>
         </div>
       </div>

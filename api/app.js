@@ -1,19 +1,13 @@
-/******************************************
-Treehouse Techdegree:
-FSJS project 9 - REST API
-******************************************/
-
-//Title: Treehouse Project 9
-//Project: REST API
-//Goal: exceed expectation
 
 
-'use strict';
+// 'use strict';
 
 // load modules
 const express = require('express');
-const cors = require('cors');
 const morgan = require('morgan');
+const cors = require('cors');
+//Heroku added
+const path = require('path');
 const { sequelize } = require('./models');
 const routes = require('./routes/users.js');
 const routess = require('./routes/courses.js');
@@ -61,6 +55,30 @@ app.use((err, req, res, next) => {
 
 // set our port
 app.set('port', process.env.PORT || 5000);
+
+//Heroku added
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+//Heroku added
+// if(process.env.NODE_ENV === 'production') {  
+//   app.use(express.static(path.join(__dirname, 'client/build')));  
+
+//   app.get('*', (req, res) => {    
+//     res.sendfile(path.join(__dirname = 'client/build/index.html'));  
+//     })
+//   }
+if(process.env.NODE_ENV === 'production') {  
+  app.use(express.static(path.join(__dirname, 'client/build'))); 
+
+  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  
+  });
+}
+
+
+  //Heroku added
+  app.get('*', (req, res) => {  
+    res.sendFile(path.join(__dirname+'/client/public/index.html'));
+  });
 
 // start listening on our port
 const server = app.listen(app.get('port'), () => {
